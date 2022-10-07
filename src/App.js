@@ -7,6 +7,21 @@ import Rank from "./components/Rank/Rank";
 import ParticlesBg from 'particles-bg'
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      input: ''
+    }
+  }
+
+  onInputChange = (event) => {
+    console.log(event.target.value);
+  }
+
+  onButtonClicked = () => {
+    console.log('Detect clicked');
+  }
+
   render() {
     return (
       <div className='App'>
@@ -14,7 +29,9 @@ class App extends Component {
         <Navigation />
         <Logo />
         <Rank />
-        <ImageLinkForm/>
+        <ImageLinkForm 
+            onInputChange={ this.onInputChange }
+            onButtonClicked={ this.onButtonClicked }/>
         {/* 
         <ImageLinkForm />
         <FaceRecognition /> */}
