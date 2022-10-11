@@ -7,20 +7,25 @@ import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import ParticlesBg from 'particles-bg'
 
+
+const authKey = 'e20b124f85624f9e95cf8d09930bfc9c';
+
 class App extends Component {
   constructor(){
     super();
     this.state = {
-      input: ''
+      input: '',
+      imageUrl: ''
     }
   }
 
   onInputChange = (event) => {
-    console.log(event.target.value);
+    this.setState({input: event.target.value});
   }
 
   onButtonClicked = () => {
-    console.log('Detect clicked');
+    this.setState({imageUrl: this.state.input})
+    console.log(this.state.imageUrl);
   }
 
   render() {
@@ -33,7 +38,7 @@ class App extends Component {
         <ImageLinkForm 
             onInputChange={ this.onInputChange }
             onButtonClicked={ this.onButtonClicked }/>
-        <FaceRecognition />
+        <FaceRecognition imageUrl={this.state.imageUrl} />
       </div>
     )
   }
