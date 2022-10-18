@@ -7,15 +7,15 @@ import Rank from "./components/Rank/Rank";
 import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import ParticlesBg from 'particles-bg'
 
-
-const authKey = 'e20b124f85624f9e95cf8d09930bfc9c';
+//import Clarifai from 'clarifai';
 
 class App extends Component {
   constructor(){
     super();
     this.state = {
       input: '',
-      imageUrl: ''
+      imageUrl: '',
+      box:''
     }
   }
 
@@ -24,8 +24,47 @@ class App extends Component {
   }
 
   onButtonClicked = () => {
-    this.setState({imageUrl: this.state.input})
-    console.log(this.state.imageUrl);
+    this.setState({imageUrl: this.state.input});
+    this.predictImageByUrl(this.state.input);
+  }
+
+  calculateFaceRecognitionBox = (data) =>{
+    
+  }
+
+  predictImageByUrl(imageUrl) {
+    console.log(imageUrl)
+
+    const raw = JSON.stringify({
+      "user_app_id": {
+        "user_id": "clarifai",
+        "app_id": "main"
+      },
+      "inputs": [
+          {
+              "data": {
+                  "image": {
+                      "url": `${imageUrl}`
+                  }
+              }
+          }
+      ]
+    });
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Key ' + '8784f7189b344bc280178f127c7c4a7a'
+        },
+        body: raw
+    };
+
+    fetch(`https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs`, requestOptions)
+        .then(resp => resp.json())
+        .then(result => console.log(result.outputs[0].data.regions))
+        .catch(error => console.log('error', error));
+  
   }
 
   render() {
