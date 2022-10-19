@@ -55,7 +55,11 @@ class App extends Component {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+<<<<<<< HEAD
             'Authorization': 'Key ' + process.env.REACT_APP_AUTH_KEY
+=======
+            'Authorization': 'Key ' + {AUTHKEY}
+>>>>>>> b02c72725248caa000f9aace8efa85dc5c7f0e86
         },
         body: raw
     };
