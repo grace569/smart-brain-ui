@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       input: '',
       imageUrl: '',
-      box:''
+      box: {}
     }
   }
 
@@ -55,14 +55,17 @@ class App extends Component {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Authorization': 'Key ' + '8784f7189b344bc280178f127c7c4a7a'
+            'Authorization': 'Key ' + process.env.REACT_APP_AUTH_KEY
         },
         body: raw
     };
 
     fetch(`https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs`, requestOptions)
         .then(resp => resp.json())
-        .then(result => console.log(result.outputs[0].data.regions))
+        .then(result => {
+          console.log(result.outputs[0].data.regions[0].region_info.bounding_box);
+          this.calculateFaceRecognitionBox(result.outputs[0].data.regions[0].region_info.bounding_box);
+        })
         .catch(error => console.log('error', error));
   
   }
