@@ -24,6 +24,10 @@ class App extends Component {
   }
 
   onButtonClicked = () => {
+    if(!this.state.input) {
+      this.setState({imageUrl: '', box: {}})
+      return
+    }
     this.setState({imageUrl: this.state.input});
     this.predictImageByUrl(this.state.input);
   }
